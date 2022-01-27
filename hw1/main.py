@@ -17,10 +17,6 @@ g = nx.Graph()
 node_names = {}
 
 
-def get_name(node):
-	return node.__class__.__name__
-
-
 def visit_node(gv, node, name):
 	counter = next(gen_num)
 	node_names[counter] = name
@@ -39,7 +35,7 @@ class GraphVisitor(ast.NodeVisitor):
 		return visit_node(self, node, "function '{}'".format(node.name))
 
 	def visit_arguments(self, node: ast.arguments):
-		return visit_node(self, node, get_name(node))
+		return visit_node(self, node, 'arguments')
 
 	def visit_For(self, node: ast.For):
 		return visit_node(self, node, 'for cycle')
@@ -71,15 +67,16 @@ def main():
 	tree = ast.parse(source)
 	visitor = GraphVisitor()
 	visitor.visit(tree)
-	#print(node_names)
 	g1 = nx.relabel_nodes(g, node_names)
 	g2 = nx.dfs_tree(g1)
+	g3 = nx.drawing.nx_agraph.to_agraph(g2)
+	#subax1 = plt.subplot(121)
+	pos = g3.layout('dot')
+	g3.draw('artifacts/AST.png', format='png')
+	#nx.draw(g2, with_labels=True)
+	#plt.savefig("artifacts/AST.png")
 	print(ast.dump(tree, indent=4))
 	print(ast.dump(tree))
-	#subax1 = plt.subplot(121)
-	nx.draw(g2, with_labels=True)
-	#plt.show()
-	plt.savefig("artifacts/AST.png")
 
 
 if __name__ == "__main__":
