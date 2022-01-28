@@ -22,12 +22,11 @@ def get_name(node):
 
 def visit_node(gv, node, name, color='white', shape='ellipse'):
     counter = next(gen_num)
-    new_name = str(counter) + ': ' + name
-    node_attr[new_name] = {'style': 'filled', 'fillcolor': color, 'label': name, 'shape': shape}
-    g.add_node(new_name)
+    node_attr[counter] = {'style': 'filled', 'fillcolor': color, 'label': name, 'shape': shape}
+    g.add_node(counter)
     lst = gv.generic_visit(node)
-    g.add_edges_from(map(lambda x: (new_name, x), lst))
-    return new_name
+    g.add_edges_from(map(lambda x: (counter, x), lst))
+    return counter
 
 
 class GraphVisitor(ast.NodeVisitor):
@@ -104,7 +103,7 @@ def main():
     g2 = nx.dfs_tree(g)
     g3 = nx.drawing.nx_agraph.to_agraph(g2)
     for node in g3.nodes():
-        for key, value in node_attr[node].items():
+        for key, value in node_attr[int(node)].items():
             node.attr[key] = value
     pos = g3.layout('dot')
     g3.draw('artifacts/AST.png', format='png')
