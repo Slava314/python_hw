@@ -74,7 +74,8 @@ class GraphVisitor(ast.NodeVisitor):
         return visit_node(self, node, get_name(node), color='peachpuff1')
 
     def visit_Attribute(self, node: ast.Attribute):
-        return visit_node(self, node, "{}: '{}'".format(get_name(node), node.attr), color='powderblue', shape='rectangle')
+        return visit_node(self, node, "{}: '{}'".format(get_name(node), node.attr), color='powderblue',
+                          shape='rectangle')
 
     def visit_Subscript(self, node: ast.Subscript):
         return visit_node(self, node, get_name(node), color='grey90', shape='rectangle')
@@ -100,13 +101,12 @@ def main():
     tree = ast.parse(source)
     visitor = GraphVisitor()
     visitor.visit(tree)
-    g2 = nx.dfs_tree(g)
-    g3 = nx.drawing.nx_agraph.to_agraph(g2)
-    for node in g3.nodes():
+    vis_g = nx.drawing.nx_agraph.to_agraph(nx.dfs_tree(g))
+    for node in vis_g.nodes():
         for key, value in node_attr[int(node)].items():
             node.attr[key] = value
-    pos = g3.layout('dot')
-    g3.draw('artifacts/AST.png', format='png')
+    pos = vis_g.layout('dot')
+    vis_g.draw('artifacts/AST.png', format='png')
 
 
 if __name__ == "__main__":
