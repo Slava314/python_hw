@@ -1,7 +1,7 @@
 def make_tex_file(name_of_file, string):
     f = open('artifacts/' + name_of_file + '.tex', 'w')
     head = "\\documentclass[12pt]{article}\n\\usepackage[T2A]{fontenc}\n\\usepackage[utf8]{inputenc}\n\\usepackage[" \
-           "english,russian]{babel}\n\\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}\n\\begin{document}\n "
+           "english,russian]{babel}\n\\usepackage{graphicx}\n\\graphicspath{ {./artifacts/} }\n\\begin{document}\n"
     end = "\end{document}\n"
     f.write(head + string + end)
     f.close()
@@ -21,11 +21,17 @@ def easy_task(lst):
     make_tex_file('easy_task', list_str)
 
 
+def medium_task(picture_path):
+    list_str = '\\includegraphics[scale=0.25]{' + picture_path + '}\n'
+    make_tex_file('medium_task', list_str)
+
+
 def main():
     n = 7
     lst = [[x * y for x in range(1, n)] for y in range(1, 2 * n)]
     lst.append(['help'] * 10)
     easy_task(lst)
+    medium_task('AST.png')
 
 
 if __name__ == "__main__":
