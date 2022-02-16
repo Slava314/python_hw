@@ -4,8 +4,8 @@ from ExampleGeneratorOfAST import fib
 
 def make_tex_file(name_of_file, string):
     f = open('artifacts/' + name_of_file + '.tex', 'w')
-    head = "\\documentclass[12pt]{article}\n\\usepackage[T2A]{fontenc}\n\\usepackage[utf8]{inputenc}\n\\usepackage[" \
-           "english,russian]{babel}\n\\usepackage{graphicx}\n\\graphicspath{ {./artifacts/} }\n\\begin{document}\n"
+    head = "\\documentclass[12pt]{article}\n\\usepackage[utf8]{inputenc}\n\\usepackage[" \
+           "english]{babel}\n\\usepackage{graphicx}\n\\graphicspath{ {./artifacts/} }\n\\begin{document}\n"
     end = "\end{document}\n"
     f.write(head + string + end)
     f.close()
