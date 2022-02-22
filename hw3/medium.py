@@ -2,8 +2,9 @@ import numpy as np
 
 
 class FileMix:
-    def write_to_file(self, file):
-        file.write(str(self))
+    def write_to_file(self, file_path):
+        with open(file_path, "w") as f:
+            f.write(str(self))
 
 
 class StrMix:
@@ -62,12 +63,6 @@ class MatrixMix(Matrix, np.lib.mixins.NDArrayOperatorsMixin, FileMix, StrMix, Ge
 np.random.seed(0)
 a = MatrixMix(np.random.randint(0, 10, (10, 10)))
 b = MatrixMix(np.random.randint(0, 10, (10, 10)))
-
-with open("./artifacts/medium/matrix+.txt", 'w') as f:
-    (a + b).write_to_file(f)
-
-with open("./artifacts/medium/matrix*.txt", 'w') as f:
-    (a * b).write_to_file(f)
-
-with open("./artifacts/medium/matrix@.txt", 'w') as f:
-    (a @ b).write_to_file(f)
+(a + b).write_to_file("./artifacts/medium/matrix+.txt")
+(a * b).write_to_file("./artifacts/medium/matrix*.txt")
+(a @ b).write_to_file("./artifacts/medium/matrix@.txt")
