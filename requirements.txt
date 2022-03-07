@@ -1,2 +1,4 @@
 networkx~=2.6.3
 pygraphviz~=1.7
+numpy~=1.21.2
+
