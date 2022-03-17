@@ -6,8 +6,9 @@ import codecs
 
 def a_func(get_connection, put_connection):
     while True:
-        time.sleep(5)
-        put_connection.send(get_connection.recv().lower())
+        while get_connection.poll():
+            put_connection.send(get_connection.recv().lower())
+            time.sleep(5)
 
 
 def b_func(get_connection, put_connection):

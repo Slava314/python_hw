@@ -6,9 +6,9 @@ import codecs
 
 def a_func(main_to_a, a_to_b):
     while True:
-        time.sleep(5)
         while not main_to_a.empty():
             a_to_b.put(main_to_a.get_nowait().lower())
+            time.sleep(5)
 
 
 def b_func(a_to_b, b_to_main):
